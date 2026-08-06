@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Granada, Spain — City of the Pomegranate | The Tourism Granada</title>
+<meta name="description" content="A traveler's guide to Granada: the Alhambra, the Albaicín, Sacromonte flamenco, and the tapas culture of Andalusia's most storied city.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#182A44;
+    --tile:#2C6E6B;
+    --pomegranate:#A8322D;
+    --sand:#E7DCC2;
+    --gold:#C9A24B;
+    --paper:#FBF7EE;
+    --ink-70: rgba(24,42,68,0.7);
+    --ink-40: rgba(24,42,68,0.4);
+    --radius: 2px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Jost', sans-serif;
+    font-weight:300;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Marcellus', serif;
+    font-weight:400;
+    letter-spacing:0.01em;
+  }
+  .mono{
+    font-family:'Space Mono', monospace;
+    text-transform:uppercase;
+    letter-spacing:0.18em;
+    font-size:0.72rem;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 clamp(20px,5vw,64px);
+  }
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0; transform:translateY(24px); transition:opacity .8s ease, transform .8s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---------- lattice signature (Nasrid star motif) ---------- */
+  .lattice-divider{
+    width:100%;
+    height:34px;
+    background-repeat:repeat-x;
+    background-size:68px 34px;
+  }
+  .lattice-a{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='68' height='34' viewBox='0 0 68 34'><g fill='none' stroke='%23C9A24B' stroke-width='1'><path d='M0 17 L8.5 0 L17 17 L8.5 34 Z'/><path d='M17 17 L25.5 0 L34 17 L25.5 34 Z'/><path d='M34 17 L42.5 0 L51 17 L42.5 34 Z'/><path d='M51 17 L59.5 0 L68 17 L59.5 34 Z'/></g></svg>");}
+  .lattice-b{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='68' height='34' viewBox='0 0 68 34'><g fill='none' stroke='%23FBF7EE' stroke-opacity='0.5' stroke-width='1'><path d='M0 17 L8.5 0 L17 17 L8.5 34 Z'/><path d='M17 17 L25.5 0 L34 17 L25.5 34 Z'/><path d='M34 17 L42.5 0 L51 17 L42.5 34 Z'/><path d='M51 17 L59.5 0 L68 17 L59.5 34 Z'/></g></svg>");}
+
+  /* ---------- nav ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    background:rgba(251,247,238,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(24,42,68,0.08);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px clamp(20px,5vw,64px);
+  }
+  .logo{
+    font-family:'Marcellus', serif;
+    font-size:1.15rem;
+    letter-spacing:0.04em;
+  }
+  .logo em{font-style:normal; color:var(--pomegranate);}
+  .nav-links{display:flex; gap:34px;}
+  .nav-links a{
+    font-family:'Space Mono', monospace;
+    font-size:0.7rem;
+    text-transform:uppercase;
+    letter-spacing:0.14em;
+    position:relative;
+    padding-bottom:4px;
+  }
+  .nav-links a::after{
+    content:'';
+    position:absolute; left:0; bottom:0;
+    width:0; height:1px; background:var(--pomegranate);
+    transition:width .35s ease;
+  }
+  .nav-links a:hover::after{width:100%;}
+  .nav-toggle{display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer;}
+  .nav-toggle span{width:22px; height:1.5px; background:var(--ink);}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex; flex-direction:column; justify-content:center;
+    padding-top:90px;
+    background:
+      radial-gradient(ellipse at 80% 20%, rgba(201,162,75,0.18), transparent 55%),
+      linear-gradient(180deg, var(--ink) 0%, #1F3654 62%, #26446A 100%);
+    color:var(--paper);
+    overflow:hidden;
+  }
+  .hero-lattice{
+    position:absolute; inset:0;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='136' height='68' viewBox='0 0 136 68'><g fill='none' stroke='%23FFFFFF' stroke-opacity='0.05' stroke-width='1'><path d='M0 34 L17 0 L34 34 L17 68 Z'/><path d='M34 34 L51 0 L68 34 L51 68 Z'/><path d='M68 34 L85 0 L102 34 L85 68 Z'/><path d='M102 34 L119 0 L136 34 L119 68 Z'/></g></svg>");
+    background-size:340px 170px;
+    opacity:0.9;
+  }
+  .hero-inner{position:relative; z-index:2;}
+  .eyebrow{
+    color:var(--gold);
+    margin-bottom:22px;
+    display:flex; align-items:center; gap:14px;
+  }
+  .eyebrow::before{content:''; width:34px; height:1px; background:var(--gold);}
+  .hero h1{
+    font-size:clamp(3.4rem, 9vw, 7.4rem);
+    line-height:0.94;
+    max-width:900px;
+  }
+  .hero h1 span{display:block; color:var(--sand); font-size:0.34em; margin-top:14px; letter-spacing:0.02em;}
+  .hero-sub{
+    max-width:480px;
+    margin-top:30px;
+    font-size:1.05rem;
+    line-height:1.7;
+    color:rgba(251,247,238,0.78);
+  }
+  .hero-cta{
+    margin-top:44px;
+    display:flex; gap:18px; flex-wrap:wrap; align-items:center;
+  }
+  .btn{
+    display:inline-block;
+    padding:15px 30px;
+    font-family:'Space Mono', monospace;
+    font-size:0.72rem;
+    text-transform:uppercase;
+    letter-spacing:0.16em;
+    border:1px solid var(--gold);
+    color:var(--paper);
+    transition:background .3s ease, color .3s ease;
+  }
+  .btn:hover{background:var(--gold); color:var(--ink);}
+  .btn-ghost{border-color:rgba(251,247,238,0.35);}
+  .btn-ghost:hover{background:rgba(251,247,238,0.1); color:var(--paper);}
+
+  .hero-stats{
+    position:relative; z-index:2;
+    display:flex; gap:clamp(28px,6vw,64px); flex-wrap:wrap;
+    margin-top:80px; padding-top:28px;
+    border-top:1px solid rgba(251,247,238,0.15);
+  }
+  .stat-num{font-family:'Marcellus', serif; font-size:1.9rem; color:var(--sand);}
+  .stat-label{margin-top:4px; color:rgba(251,247,238,0.55);}
+
+  /* ---------- section shell ---------- */
+  section{padding:120px 0;}
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    gap:40px; margin-bottom:64px; flex-wrap:wrap;
+  }
+  .section-head .mono{color:var(--pomegranate); margin-bottom:14px; display:block;}
+  .section-head h2{font-size:clamp(2.2rem,4.4vw,3.2rem); max-width:560px;}
+  .section-head p{max-width:340px; color:var(--ink-70); line-height:1.7; font-size:0.95rem;}
+
+  /* ---------- overview ---------- */
+  .overview{background:var(--paper);}
+  .overview-grid{
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:70px; align-items:start;
+  }
+  .overview-text p{color:var(--ink-70); line-height:1.85; font-size:1.05rem; margin-bottom:22px;}
+  .overview-text p:first-of-type::first-letter{
+    font-family:'Marcellus', serif;
+    font-size:3.6rem; float:left; line-height:0.8;
+    padding-right:12px; padding-top:8px;
+    color:var(--pomegranate);
+  }
+  .fact-card{
+    background:var(--ink); color:var(--paper);
+    padding:38px 34px;
+  }
+  .fact-card .mono{color:var(--gold); margin-bottom:18px; display:block;}
+  .fact-row{
+    display:flex; justify-content:space-between;
+    padding:14px 0; border-bottom:1px solid rgba(251,247,238,0.14);
+    font-size:0.92rem;
+  }
+  .fact-row:last-child{border-bottom:none;}
+  .fact-row span:first-child{color:rgba(251,247,238,0.55);}
+
+  /* ---------- highlights ---------- */
+  .highlights{background:var(--ink); color:var(--paper);}
+  .highlights .section-head .mono{color:var(--gold);}
+  .highlights .section-head p{color:rgba(251,247,238,0.6);}
+  .h-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    grid-template-rows:auto auto;
+    gap:2px;
+    background:rgba(251,247,238,0.14);
+  }
+  .h-card{
+    background:#1F3654;
+    padding:38px 28px;
+    position:relative;
+    min-height:280px;
+    display:flex; flex-direction:column; justify-content:flex-end;
+    transition:background .4s ease;
+  }
+  .h-card:hover{background:#26446A;}
+  .h-card.big{grid-column:span 2; grid-row:span 2; min-height:580px;}
+  .h-tag{
+    font-family:'Space Mono', monospace; font-size:0.68rem;
+    text-transform:uppercase; letter-spacing:0.14em; color:var(--gold);
+    margin-bottom:14px;
+  }
+  .h-card h3{font-size:1.5rem; margin-bottom:12px;}
+  .h-card.big h3{font-size:2.1rem;}
+  .h-card p{color:rgba(251,247,238,0.65); font-size:0.9rem; line-height:1.65;}
+
+  /* ---------- itinerary ---------- */
+  .itinerary{background:var(--paper);}
+  .it-list{border-top:1px solid rgba(24,42,68,0.14);}
+  .it-item{
+    display:grid; grid-template-columns:120px 1fr 1fr;
+    gap:30px; padding:34px 0;
+    border-bottom:1px solid rgba(24,42,68,0.14);
+    align-items:start;
+  }
+  .it-time{font-family:'Space Mono', monospace; font-size:0.78rem; color:var(--pomegranate); letter-spacing:0.05em; padding-top:4px;}
+  .it-item h3{font-size:1.3rem; margin-bottom:6px;}
+  .it-item p{color:var(--ink-70); font-size:0.92rem; line-height:1.7;}
+
+  /* ---------- gallery band ---------- */
+  .band{
+    background:var(--tile); color:var(--paper);
+    padding:90px 0; text-align:center;
+  }
+  .band h2{font-size:clamp(2rem,5vw,3.2rem); max-width:760px; margin:0 auto 26px;}
+  .band p{max-width:560px; margin:0 auto; color:rgba(251,247,238,0.78); line-height:1.75;}
+
+  /* ---------- food/culture ---------- */
+  .culture{background:var(--sand);}
+  .c-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:rgba(24,42,68,0.14);}
+  .c-card{background:var(--sand); padding:44px 34px;}
+  .c-num{font-family:'Marcellus', serif; font-size:1.1rem; color:var(--pomegranate); margin-bottom:16px;}
+  .c-card h3{font-size:1.25rem; margin-bottom:12px;}
+  .c-card p{color:var(--ink-70); font-size:0.92rem; line-height:1.7;}
+
+  /* ---------- plan / cta ---------- */
+  .plan{background:var(--paper);}
+  .plan-box{
+    background:var(--ink); color:var(--paper);
+    padding:clamp(46px,7vw,90px);
+    display:grid; grid-template-columns:1.3fr 1fr; gap:50px;
+    align-items:center;
+    position:relative; overflow:hidden;
+  }
+  .plan-box::after{
+    content:''; position:absolute; right:-40px; bottom:-40px;
+    width:220px; height:220px;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='136' height='68' viewBox='0 0 136 68'><g fill='none' stroke='%23C9A24B' stroke-opacity='0.35' stroke-width='1'><path d='M0 34 L17 0 L34 34 L17 68 Z'/><path d='M34 34 L51 0 L68 34 L51 68 Z'/><path d='M68 34 L85 0 L102 34 L85 68 Z'/><path d='M102 34 L119 0 L136 34 L119 68 Z'/></g></svg>");
+    background-size:170px 85px;
+  }
+  .plan-box h2{font-size:clamp(1.9rem,4vw,2.7rem); margin-bottom:18px;}
+  .plan-box p{color:rgba(251,247,238,0.72); line-height:1.75; max-width:440px;}
+  .plan-form{
+    background:rgba(251,247,238,0.06);
+    border:1px solid rgba(251,247,238,0.18);
+    padding:34px; position:relative; z-index:2;
+  }
+  .plan-form .mono{color:var(--gold); display:block; margin-bottom:20px;}
+  .field{margin-bottom:16px;}
+  .field label{display:block; font-size:0.78rem; color:rgba(251,247,238,0.6); margin-bottom:6px;}
+  .field input, .field select{
+    width:100%; background:transparent; border:none;
+    border-bottom:1px solid rgba(251,247,238,0.3);
+    color:var(--paper); font-family:'Jost',sans-serif; font-size:0.95rem;
+    padding:8px 0; outline:none;
+  }
+  .field select option{color:#111;}
+  .plan-form .btn{width:100%; text-align:center; margin-top:10px; background:var(--pomegranate); border-color:var(--pomegranate);}
+  .plan-form .btn:hover{background:transparent; color:var(--paper);}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--ink); color:rgba(251,247,238,0.6); padding:70px 0 30px;}
+  .foot-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; padding-bottom:50px;}
+  .foot-brand .logo{color:var(--paper); margin-bottom:16px;}
+  .foot-brand p{font-size:0.88rem; line-height:1.7; max-width:280px;}
+  .foot-col .mono{color:var(--gold); display:block; margin-bottom:18px;}
+  .foot-col a{display:block; font-size:0.88rem; margin-bottom:10px; color:rgba(251,247,238,0.65);}
+  .foot-col a:hover{color:var(--paper);}
+  .foot-bottom{
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px;
+    padding-top:26px; border-top:1px solid rgba(251,247,238,0.12);
+    font-size:0.78rem;
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:900px){
+    .nav-links{display:none;}
+    .nav-toggle{display:flex;}
+    .overview-grid{grid-template-columns:1fr;}
+    .h-grid{grid-template-columns:repeat(2,1fr);}
+    .h-card.big{grid-column:span 2; grid-row:span 1; min-height:340px;}
+    .it-item{grid-template-columns:80px 1fr; }
+    .it-item p{grid-column:2 / 3;}
+    .c-grid{grid-template-columns:1fr;}
+    .plan-box{grid-template-columns:1fr;}
+    .foot-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:520px){
+    .foot-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="logo">the tourism <em>granada</em></div>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#highlights">Highlights</a>
+      <a href="#itinerary">Itinerary</a>
+      <a href="#culture">Culture</a>
+      <a href="#plan">Plan a Visit</a>
+    </div>
+    <button class="nav-toggle" aria-label="menu"><span></span><span></span><span></span></button>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-lattice"></div>
+  <div class="wrap hero-inner">
+    <div class="eyebrow mono">Andalusia, Spain — 37.18° N</div>
+    <h1>GRANADA<span>Where the Alhambra still keeps watch over the plain</span></h1>
+    <p class="hero-sub">Snow-capped Sierra Nevada on one horizon, the Vega's olive groves on the other, and between them a city built in terraces of red stone and white-washed courtyards. This is a guide for travelers who want to walk it properly.</p>
+    <div class="hero-cta">
+      <a href="#itinerary" class="btn">Start Planning</a>
+      <a href="#highlights" class="btn btn-ghost">See Highlights</a>
+    </div>
+  </div>
+  <div class="wrap hero-stats">
+    <div>
+      <div class="stat-num">1238</div>
+      <div class="stat-label mono">Nasrid dynasty begins</div>
+    </div>
+    <div>
+      <div class="stat-num">738m</div>
+      <div class="stat-label mono">Elevation above sea level</div>
+    </div>
+    <div>
+      <div class="stat-num">3</div>
+      <div class="stat-label mono">UNESCO-listed monuments</div>
+    </div>
+    <div>
+      <div class="stat-num">300+</div>
+      <div class="stat-label mono">Sunlit days a year</div>
+    </div>
+  </div>
+</section>
+
+<div class="lattice-divider lattice-a"></div>
+
+<section class="overview" id="overview">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="mono">The city, briefly</span>
+        <h2>A capital of three cultures, still legible in its streets</h2>
+      </div>
+      <p>Granada's story is written into its geography — you can read it by walking uphill.</p>
+    </div>
+    <div class="overview-grid">
+      <div class="overview-text reveal">
+        <p>Granada was the last stronghold of Muslim rule in the Iberian Peninsula, and it fell only in 1492 — later than anywhere else in Spain. That late ending is why the city feels so intact: the Alhambra was never demolished and rebuilt, only added to, layer over layer, by Nasrid sultans, Catholic monarchs, and centuries of Granadinos since.</p>
+        <p>Below the fortress, the Albaicín climbs the opposite hill in a tangle of Moorish-era alleys, its whitewashed cármenes hiding gardens behind high walls. Across the Darro ravine, Sacromonte's cave dwellings hold the city's flamenco tradition. And at street level, Granada keeps a habit few Spanish cities still do: order a drink, and a small plate of tapas arrives free, unasked.</p>
+      </div>
+      <div class="fact-card reveal">
+        <span class="mono">Trip essentials</span>
+        <div class="fact-row"><span>Nearest airport</span><span>Federico García Lorca (GRX)</span></div>
+        <div class="fact-row"><span>Best months</span><span>April–June, Sept–Oct</span></div>
+        <div class="fact-row"><span>Language</span><span>Spanish (Andalusian)</span></div>
+        <div class="fact-row"><span>Currency</span><span>Euro (€)</span></div>
+        <div class="fact-row"><span>Alhambra tickets</span><span>Book 1–2 months ahead</span></div>
+        <div class="fact-row"><span>Getting around</span><span>On foot / local buses</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="highlights" id="highlights">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="mono">Where to go</span>
+        <h2>Four places that explain Granada</h2>
+      </div>
+      <p>Not a checklist — a set of neighborhoods, each telling a different part of the same story.</p>
+    </div>
+    <div class="h-grid reveal">
+      <div class="h-card big">
+        <div class="h-tag">The Palace</div>
+        <h3>Alhambra &amp; Generalife</h3>
+        <p>A fortress-palace complex of carved stucco, reflecting pools, and cypress gardens, built by the Nasrid sultans across two centuries. Go for the Palacios Nazaríes at your booked time slot — it's the one part of the visit that can't be improvised.</p>
+      </div>
+      <div class="h-card">
+        <div class="h-tag">The Hillside</div>
+        <h3>Albaicín</h3>
+        <p>The old Moorish quarter, all narrow lanes and hidden courtyard gardens. Climb to Mirador de San Nicolás at dusk for the classic view back across to the Alhambra.</p>
+      </div>
+      <div class="h-card">
+        <div class="h-tag">The Caves</div>
+        <h3>Sacromonte</h3>
+        <p>Whitewashed cave-houses cut into the hillside, home to Granada's Roma flamenco tradition. Several still host intimate, unamplified evening performances.</p>
+      </div>
+      <div class="h-card">
+        <div class="h-tag">The Table</div>
+        <h3>Tapas Route</h3>
+        <p>Along Calle Navas and Campo del Príncipe, a drink still buys you a free tapa — order a caña, see what the kitchen sends out, and keep moving.</p>
+      </div>
+      <div class="h-card">
+        <div class="h-tag">The Chapel</div>
+        <h3>Capilla Real</h3>
+        <p>The Gothic mausoleum of Ferdinand and Isabella, built to mark the end of the Reconquista — a short walk from the cathedral, easy to combine in one stop.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="lattice-divider lattice-b" style="background-color:#182A44;"></div>
+
+<section class="itinerary" id="itinerary">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="mono">Suggested pacing</span>
+        <h2>Three days, no rushing</h2>
+      </div>
+      <p>Granada rewards slow mornings and long lunches more than a packed schedule.</p>
+    </div>
+    <div class="it-list reveal">
+      <div class="it-item">
+        <div class="it-time">Day One</div>
+        <h3>The Alhambra</h3>
+        <p>Give it the whole morning. Enter early, move through the Alcazaba, the Palacios Nazaríes at your ticketed hour, then the Generalife gardens last, when the crowds thin.</p>
+      </div>
+      <div class="it-item">
+        <div class="it-time">Day Two</div>
+        <h3>Albaicín &amp; the cathedral quarter</h3>
+        <p>Wander uphill with no fixed route, stop at Plaza Larga for breakfast, visit the Capilla Real and cathedral, then end at San Nicolás for sunset over the palace.</p>
+      </div>
+      <div class="it-item">
+        <div class="it-time">Day Three</div>
+        <h3>Sacromonte &amp; the Vega</h3>
+        <p>Morning at the Sacromonte caves and its small museum, afternoon free in the Realejo district, evening reserved for a flamenco performance in a cave venue.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap reveal">
+    <h2>"Dale limosna, mujer, que no hay en la vida nada como la pena de ser ciego en Granada."</h2>
+    <p>— a line carved into the Alhambra's grounds, on the sorrow of being blind in a city this beautiful.</p>
+  </div>
+</section>
+
+<section class="culture" id="culture">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="mono">Eat &amp; experience</span>
+        <h2>What to order, what to hear</h2>
+      </div>
+      <p>Granada's culture travels through its kitchens and its music halls equally.</p>
+    </div>
+    <div class="c-grid reveal">
+      <div class="c-card">
+        <div class="c-num">Tapa</div>
+        <h3>Free with every drink</h3>
+        <p>Habas con jamón, patatas bravas, a slice of tortilla — the kitchen decides. Order a second round and it usually changes.</p>
+      </div>
+      <div class="c-card">
+        <div class="c-num">Plato</div>
+        <h3>Regional dishes to seek out</h3>
+        <p>Piononos from Santa Fe, remojón granadino (orange and cod salad), and habitas con jamón in early spring.</p>
+      </div>
+      <div class="c-card">
+        <div class="c-num">Cante</div>
+        <h3>Flamenco, done properly</h3>
+        <p>Skip the tourist-menu shows near the cathedral; the Sacromonte cave venues offer something closer to the real, unhurried form.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="plan" id="plan">
+  <div class="wrap">
+    <div class="plan-box reveal">
+      <div>
+        <span class="mono" style="color:var(--gold);">Plan your visit</span>
+        <h2>Get a route built around your dates</h2>
+        <p>Tell us when you're arriving and what you care about — ruins, food, flamenco, or all three — and we'll send back a day-by-day plan sized to your trip.</p>
+      </div>
+      <div class="plan-form">
+        <span class="mono">Trip request</span>
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" type="text" placeholder="Your name">
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="you@example.com">
+        </div>
+        <div class="field">
+          <label for="days">Trip length</label>
+          <select id="days">
+            <option>2 days</option>
+            <option selected>3 days</option>
+            <option>4–5 days</option>
+            <option>A week or more</option>
+          </select>
+        </div>
+        <button type="button" class="btn">Request an Itinerary</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="logo">the tourism <em style="font-style:normal;color:var(--gold);">granada</em></div>
+        <p>An independent travel guide to Granada, Spain — built for travelers who'd rather walk slowly than see everything.</p>
+      </div>
+      <div class="foot-col">
+        <span class="mono">Explore</span>
+        <a href="#overview">Overview</a>
+        <a href="#highlights">Highlights</a>
+        <a href="#itinerary">Itinerary</a>
+        <a href="#culture">Culture</a>
+      </div>
+      <div class="foot-col">
+        <span class="mono">Practical</span>
+        <a href="#plan">Plan a visit</a>
+        <a href="#">Alhambra tickets</a>
+        <a href="#">Getting around</a>
+        <a href="#">When to go</a>
+      </div>
+      <div class="foot-col">
+        <span class="mono">Elsewhere</span>
+        <a href="#">Sierra Nevada day trips</a>
+        <a href="#">Costa Tropical</a>
+        <a href="#">Córdoba &amp; Seville</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 The Tourism Granada. An independent guide, not affiliated with any government body.</span>
+      <span>thetourismgranada.shop</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  },{threshold:0.15});
+  revealEls.forEach(el=>io.observe(el));
+
+  const toggle = document.querySelector('.nav-toggle');
+  const links = document.querySelector('.nav-links');
+  toggle?.addEventListener('click', ()=>{
+    const open = links.style.display === 'flex';
+    links.style.display = open ? 'none' : 'flex';
+    links.style.cssText += open ? '' : 'position:fixed;top:66px;left:0;right:0;background:#FBF7EE;flex-direction:column;padding:24px;gap:20px;border-bottom:1px solid rgba(24,42,68,0.1);';
+  });
+</script>
+
+</body>
+</html>
